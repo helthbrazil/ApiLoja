@@ -1,0 +1,58 @@
+package br.com.mercado.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import br.com.mercado.connection.Conexao;
+import br.com.mercado.entity.Produto;
+import br.com.mercado.interfaces.IDao;
+
+public class ProdutoDao implements IDao<Produto> {
+
+	@Override
+	public void save(Produto elemento) {
+		Connection con = Conexao.getConnection();
+		try {
+			String query = "INSERT INTO produto (nome, fabricante , embalagem, preco) Values (?,?,?,?) ";
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.executeQuery();
+			con.commit();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} finally {
+				try {
+					con.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
+
+	}
+
+	@Override
+	public Produto find(Integer id) {
+
+		return null;
+	}
+
+	@Override
+	public void delete(Produto elemento) {
+
+	}
+
+	@Override
+	public void update(Produto elemento) {
+
+	}
+
+}

@@ -1,0 +1,8 @@
+package br.com.mercado.interfaces;
+
+public interface IDao<E> {
+	public void save(E elemento);
+	public E find(Integer id);
+	public void delete(E elemento);
+	public void update(E elemento);
+}

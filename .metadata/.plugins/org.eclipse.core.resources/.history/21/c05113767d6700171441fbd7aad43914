@@ -1,0 +1,65 @@
+package br.com.mercado.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import br.com.mercado.connection.Conexao;
+import br.com.mercado.entity.Produto;
+import br.com.mercado.interfaces.IDao;
+
+public class ProdutoDao implements IDao<Produto> {
+
+	@Override
+	public boolean save(Produto produto) {
+		Connection con = Conexao.getConnection();
+		try {
+			String query = "INSERT INTO produto (nome, fabricante , embalagem, preco) Values (?,?,?,?) ";
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1, produto.getNome());
+			ps.setString(2, produto.getFabricante());
+			ps.setString(3, produto.getEmbalagem());
+			ps.setDouble(4, produto.getPreco());
+			
+			ps.executeQuery();
+			con.commit();
+			System.out.println();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				con.rollback();
+				System.out.println("Rollback Efetuado");
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} finally {
+				try {
+					con.close();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
+
+	}
+
+	@Override
+	public Produto find(Integer id) {
+
+		return null;
+	}
+
+	@Override
+	public void delete(Produto elemento) {
+
+	}
+
+	@Override
+	public void update(Produto elemento) {
+
+	}
+
+}

@@ -1,0 +1,38 @@
+package br.com.mercado.controller;
+
+import java.sql.Connection;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.mercado.connection.Conexao;
+import io.swagger.annotations.ApiOperation;
+
+@SpringBootApplication
+@RestController
+@RequestMapping("/produto")
+public class ApiLoja {
+	private static Connection con;
+
+	@ApiOperation(value = "Teste")
+	@RequestMapping(value = "/teste", method = RequestMethod.GET)
+	public String home() {
+		return "Hello World!";
+	}
+
+	@ApiOperation(value = "Conecta o banco de dados")
+	@RequestMapping(value = "/salvar", method = RequestMethod.POST, produces = "application/json")
+	public String conectar() {
+		Connection con = Conexao.getConnection();
+		return "Teste!";
+	}
+
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(ApiLoja.class, args);
+		con = Conexao.getConnection();
+	}
+
+}
